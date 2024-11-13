@@ -5,7 +5,7 @@ import os
 import base64
 import random
 
-
+#config
 bedrock_client = boto3.client("bedrock-runtime", region_name="us-east-1")
 s3_client = boto3.client("s3")
 
@@ -15,7 +15,7 @@ prefix = "45"
 
 #lambda function
 def lambda_handler(event, context):
-    
+    #try to get the prompt from the request body
     try:
         
         body = json.loads(event["body"])
@@ -27,7 +27,7 @@ def lambda_handler(event, context):
             "body": json.dumps(str(error))
         }
 
-
+    #add a path to genererated image
     seed = random.randint(0, 2147483647)
     s3_image_path = f"{prefix}/generated_images/image_titan{seed}.png"
 
@@ -45,7 +45,7 @@ def lambda_handler(event, context):
     }
 
     try:
-        
+        #try to generate ai image
         response = bedrock_client.invoke_model(modelId="amazon.titan-image-generator-v1", body=json.dumps(native_request))
         model_response = json.loads(response["body"].read())
 
