@@ -9,7 +9,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./sam_lambda  # Correct path to sam_lambda
+        working-directory: ./sam-app-eksamen-2024-45  # Correct path to sam_lambda
 
     steps:
       - uses: actions/checkout@v2
