@@ -1,5 +1,5 @@
 terraform {
-  required_version = ">= 1.9"  # Krever minst versjon 1.9 av Terraform
+  required_version = ">= 1.9"  # bruker minst versjon 1.9 av Terraform
   required_providers {
     aws = {
       source  = "hashicorp/aws"
