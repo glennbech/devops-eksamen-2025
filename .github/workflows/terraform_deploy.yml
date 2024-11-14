@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main        # Trigger the workflow on pushes to the main branch
-      - "*-feature" # Example to also trigger the workflow on feature branches
+      - "feature/*" # Example to also trigger the workflow on feature branches
 
 jobs:
   terraform:
