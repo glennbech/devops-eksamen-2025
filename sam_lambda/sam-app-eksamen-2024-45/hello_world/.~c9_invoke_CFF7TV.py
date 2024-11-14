@@ -19,7 +19,7 @@ def lambda_handler(event, context):
     try:
         
         body = json.loads(event["body"])
-        prompt = body.get("prompt", "no prompt: generate a flying cat in new york")
+        prompt = body.get("prompt", "no prompt: generate a flying r in new york")
 
     except Exception as error:
         return {
