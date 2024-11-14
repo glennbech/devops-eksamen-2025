@@ -10,7 +10,7 @@ terraform {
   #s3 bucket backend for å lagre tfstate filen
   backend "s3" {
     bucket         = "pgr301-2024-terraform-state"
-    key            = "infra/terraform.tfstate"
+    key            = "45/terraform.tfstate"
     region         = "eu-west-1"
     encrypt        = true
   }

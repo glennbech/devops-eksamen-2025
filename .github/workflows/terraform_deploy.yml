@@ -20,30 +20,30 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: "eu-west-1"  # Use the desired region
+          aws-region: "eu-west-1"
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: "1.9.0"  # Specify the Terraform version
+          terraform_version: "1.9.0"
 
       - name: Terraform Initialization
         run: terraform init
-        working-directory: ./infra  # Specify the directory if necessary
+        working-directory: ./infra
 
       - name: Terraform Plan
         run: terraform plan -out=tfplan -detailed-exitcode
-        working-directory: ./infra  # Specify the directory if necessary
+        working-directory: ./infra
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'  # Only run on main branch
         run: |
           terraform apply -auto-approve tfplan || exit 0  # Ensure it doesn’t crash if no changes are detected
-        working-directory: ./infra  # Specify the directory if necessary
+        working-directory: ./infra
 
       - name: Output SQS URL (for testing)
         if: github.ref == 'refs/heads/main'  # Only run on main branch
         run: |
           SQS_URL=$(aws sqs get-queue-url --queue-name image_async_queue --query 'QueueUrl' --output text)
           echo "SQS URL: $SQS_URL"
-        working-directory: ./infra  # Specify the directory if necessary
+        working-directory: ./infra
