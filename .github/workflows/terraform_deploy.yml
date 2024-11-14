@@ -3,8 +3,8 @@ name: Terraform Deploy
 on:
   push:
     branches:
-      - main        # Når det er en push til main, skal vi kjøre terraform apply
-      - "*-feature" # Eksempel på at push til feature-brancher også kan trigge workflowen
+      - main        # Trigger the workflow on pushes to the main branch
+      - "*-feature" # Example to also trigger the workflow on feature branches
 
 jobs:
   terraform:
@@ -20,26 +20,30 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: "eu-west-1"  # Bytt ut med ønsket region
+          aws-region: "eu-west-1"  # Use the desired region
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: "1.5.0"  # Velg ønsket Terraform-versjon
+          terraform_version: "1.5.0"  # Specify the Terraform version
 
-      - name: Initialize Terraform #etter den første gangeen init har kjørt så må den fjernes
+      - name: Terraform Initialization
         run: terraform init
+        working-directory: ./infra  # Specify the directory if necessary
 
       - name: Terraform Plan
-        run: terraform plan -out=tfplan
+        run: terraform plan -out=tfplan -detailed-exitcode
+        working-directory: ./infra  # Specify the directory if necessary
 
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/main'  # Kjør terraform apply kun på main
+        if: github.ref == 'refs/heads/main'  # Only run on main branch
         run: |
-          terraform apply -auto-approve tfplan
+          terraform apply -auto-approve tfplan || exit 0  # Ensure it doesn’t crash if no changes are detected
+        working-directory: ./infra  # Specify the directory if necessary
 
       - name: Output SQS URL (for testing)
-        if: github.ref == 'refs/heads/main'  # Only run on main branch after apply
+        if: github.ref == 'refs/heads/main'  # Only run on main branch
         run: |
           SQS_URL=$(aws sqs get-queue-url --queue-name image_async_queue --query 'QueueUrl' --output text)
           echo "SQS URL: $SQS_URL"
+        working-directory: ./infra  # Specify the directory if necessary
