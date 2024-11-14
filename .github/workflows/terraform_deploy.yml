@@ -28,7 +28,7 @@ jobs:
           terraform_version: "1.9.0"
 
       - name: Terraform Initialization
-        run: terraform init
+        run: terraform init -migrate-state
         working-directory: ./infra
 
       - name: Terraform Plan
