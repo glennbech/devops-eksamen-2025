@@ -23,7 +23,6 @@ resource "aws_iam_policy" "lambda_sqs_45_policy" {
     Statement = [
       {
         Action   = [
-          "sqs:SendMessage",
           "sqs:ReceiveMessage",
           "sqs:DeleteMessage",
           "sqs:GetQueueAttributes"
@@ -38,8 +37,16 @@ resource "aws_iam_policy" "lambda_sqs_45_policy" {
           "s3:ListBucket"
         ],
         Effect   = "Allow",
-        Resource = "arn:aws:s3:::pgr301-couch-explorers/*",
-        Resource = "arn:aws:s3:::pgr301-2024-terraform-state/*"
+        Resource = "arn:aws:s3:::pgr301-couch-explorers/45/*"
+      },
+      {
+        Action   = [
+          "s3:PutObject",
+          "s3:GetObject",
+          "s3:ListBucket"
+        ],
+        Effect   = "Allow",
+        Resource = "arn:aws:s3:::pgr301-2024-terraform-state/45/*"
       },
       {
         Action   = "bedrock:InvokeModel",
