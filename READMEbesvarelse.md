@@ -10,4 +10,4 @@ besvarelse1:https://github.com/Haakon514/devops-eksamen-2024/actions/runs/118442
 
 besvarelse3:https://github.com/Haakon514/devops-eksamen-2024/actions/runs/11844418784/job/33007596391
 
-besvarelse2:https://sqs.eu-west-1.amazonaws.com/***/image_async_queue
+besvarelse2:https://sqs.eu-west-1.amazonaws.com/244530008913/image_async_queue

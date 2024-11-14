@@ -23,6 +23,7 @@ resource "aws_iam_policy" "lambda_sqs_45_policy" {
     Statement = [
       {
         Action   = [
+          "sqs:SendMessage",
           "sqs:ReceiveMessage",
           "sqs:DeleteMessage",
           "sqs:GetQueueAttributes"
