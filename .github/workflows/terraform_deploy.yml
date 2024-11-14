@@ -31,7 +31,6 @@ jobs:
         run: terraform init
 
       - name: Terraform Plan
-        if: github.ref != 'refs/heads/main'  # Kjør terraform plan på alle andre branches
         run: terraform plan -out=tfplan
 
       - name: Terraform Apply
