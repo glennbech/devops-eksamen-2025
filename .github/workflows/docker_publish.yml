@@ -25,7 +25,7 @@ jobs:
         run: |
           rev=$(git rev-parse --short HEAD)
           docker build -f ./java_sqs_client/Dockerfile . -t java_sqs_client_45
-          docker tag java_sqs_client_45 java_sqs_client_45:$rev
-          docker push java_sqs_client_45:$rev
-          docker tag java_sqs_client_45 java_sqs_client_45:latest
-          docker push java_sqs_client_45:latest
+          docker tag java_sqs_client_45 ${{ secrets.DOCKER_USERNAME }}/java_sqs_client_45:$rev
+          docker push ${{ secrets.DOCKER_USERNAME }}/java_sqs_client_45:$rev
+          docker tag java_sqs_client_45 ${{ secrets.DOCKER_USERNAME }}/java_sqs_client_45:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/java_sqs_client_45:latest
