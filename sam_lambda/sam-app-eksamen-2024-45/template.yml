@@ -18,6 +18,7 @@ Resources:
       Environment: 
         Variables:
           BUCKET_NAME: "pgr301-couch-explorers"
+          PREFIX: "45"
       Policies:
             Statement:
               # Permissions to interact with S3 bucket

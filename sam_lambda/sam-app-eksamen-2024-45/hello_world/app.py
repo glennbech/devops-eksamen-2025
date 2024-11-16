@@ -11,7 +11,7 @@ s3_client = boto3.client("s3")
 
 #env variables
 bucket_name = os.getenv("BUCKET_NAME")
-prefix = "45"
+prefix = os.getenv("PREFIX")
 
 #lambda function
 def lambda_handler(event, context):
@@ -44,25 +44,18 @@ def lambda_handler(event, context):
         }
     }
 
-    try:
-        #try to generate ai image
-        response = bedrock_client.invoke_model(modelId="amazon.titan-image-generator-v1", body=json.dumps(native_request))
-        model_response = json.loads(response["body"].read())
+    #try to generate ai image
+    response = bedrock_client.invoke_model(modelId="amazon.titan-image-generator-v1", body=json.dumps(native_request))
+    model_response = json.loads(response["body"].read())
 
-        base64_image_data = model_response["images"][0]
-        image_data = base64.b64decode(base64_image_data)
-        
-        #putting the image into the s3 bucket
-        s3_client.put_object(Bucket=bucket_name, Key=s3_image_path, Body=image_data)
+    base64_image_data = model_response["images"][0]
+    image_data = base64.b64decode(base64_image_data)
+    
+    #putting the image into the s3 bucket
+    s3_client.put_object(Bucket=bucket_name, Key=s3_image_path, Body=image_data)
 
-        return {
-            "statusCode": 200,
-            "body": json.dumps({"message": f"Successfully generated and uploaded to s3 bucket: {bucket_name}", 
-            "s3_path": f"image_path: {bucket_name}/{s3_image_path}"})
-        }
-
-    except Exception as error:
-        return {
-            "statusCode": 500,
-            "body": json.dumps({str(error)})
-        }
+    return {
+        "statusCode": 200,
+        "body": json.dumps({"message": f"Successfully generated and uploaded to s3 bucket: {bucket_name}", 
+        "s3_path": f"image_path: {bucket_name}/{s3_image_path}"})
+    }
