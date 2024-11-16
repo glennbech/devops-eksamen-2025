@@ -20,3 +20,4 @@ Oppgave 3
     -latest tagen er en tag som gjør at man lett vet hvilken versjon av koden som ble pushet sist. dette gjør det lett for å finne den siste versjonen av koden.
 
 -besvarelse2:hagu021/java_sqs_client_45
+-bruk: https://sqs.eu-west-1.amazonaws.com/244530008913/image_async_queue som parameter i docker run kommandoen med -e når du tester imaget sammen med aws acces keys
