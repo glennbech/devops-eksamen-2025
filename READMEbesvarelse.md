@@ -21,3 +21,9 @@ Oppgave 3
 
 -besvarelse2:hagu021/java_sqs_client_45
 -bruk: https://sqs.eu-west-1.amazonaws.com/244530008913/image_async_queue som parameter i docker run kommandoen med -e når du tester imaget sammen med aws acces keys
+
+Oppgave 4
+
+-alarm-navn: oldestMessage-sqs-alarm-45
+
+Oppgave 5
